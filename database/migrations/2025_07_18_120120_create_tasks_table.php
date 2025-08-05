@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->UnsignedBigInteger('categori_id');
+            $table->string('title')->nullable();
+            $table->string('content');
+            $table->tinyInteger('status')->default(0)->comment('0-yapılmadı, 1-yapılıyor, 2-ertelendi, 3-iptal oldu');
+            $table->dateTime('deadline')->nullable();
+            $table->softDelete();
             $table->timestamps();
+            $table->foreign('categori_id')->on('categories')->references('id');
         });
     }
 
