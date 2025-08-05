@@ -12,10 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->boolean('is active')->defult(1)->comment('0-inaktif, 1-aktif');
-            $table->softDelete();
+           $table->id();
+           $table->unsignedBigInteger('user_id');
+           $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                   ->onDelete('cascade');
+            $table->string('name');
+            $table->boolean('is_active')->default(1)->comment('0-inaktif, 1-aktif');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
